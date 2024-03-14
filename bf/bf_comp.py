@@ -1,24 +1,21 @@
-'''
-    BrainF*ck-to-Python compiler and executer
-    By Tyler Marion
+#BF-to-Python compiler and executer
+#By Tyler Marion
     
-    -Uses exec() function to run the code from a string
-    -Probably violates python zen in half a dozen different ways
-    -(I don't really care because its way faster than my class-based interpereter)
-    -Currently only runs with 8-bit memory addresses
-    -memory pointer is only programmed to wrap when 
+#-Uses exec() function to run the code from a string
+#-Probably violates python zen in half a dozen different ways
+#-My fastest interpereter
+#-Currently only runs with 8-bit memory addresses
+#-memory pointer is only programmed to wrap when going out of range
     
-    -currently completes the below benchmark test (268,436,271 commands) in 24 seconds 
-    -code: ++++++++[->-[->-[->-[-]<]<]<]>++++++++[<++++++++++>-]<[>+>+<<-]>-.>-----.
-    -(code from https://github.com/rdebath/Brainfuck/blob/master/testing/Bench.b)
-
-'''
+#-currently completes the below benchmark test (268,436,271 commands) in 24 seconds 
+#-code: ++++++++[->-[->-[->-[-]<]<]<]>++++++++[<++++++++++>-]<[>+>+<<-]>-.>-----.
+#-(code from https://github.com/rdebath/Brainfuck/blob/master/testing/Bench.b)
 
 from time import time
 from sys import exit
 
 scope = 0
-instructions = '''>+>+>+>+>+>+>+[->[>]+[->[>]+>+>+[<]+<]+<]+++++++[>+++++++++++>+<<-]>+.----.>++.'''
+instructions = ''''''
 ins = ''.join(filter((lambda x:x in '+-><[],.'), instructions))
 inp = list('brainf*ck')
 out: str = ''
