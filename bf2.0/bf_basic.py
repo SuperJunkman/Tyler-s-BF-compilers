@@ -1,5 +1,11 @@
+#My first attempt at a BF interpereter. Executes each command using a match statement
+#By Tyler Marion
+#Timeout logic has been temporarily removed, will likely be re-implemented in the future
+#Currently no handler for broken scopes
+#Runs the benchmark test below (268,435,497 commands) in 202 seconds (>3 minutes)
+#++++++++[->-[->-[->-[-]<]<]<]
+
 from time import time
-from numpy import uint8
 def bf(ins: str, inp: str = "") -> str:
     BUF_SIZE = 1000
     mem: list[int] = [0 for i in range(BUF_SIZE)]
@@ -7,14 +13,13 @@ def bf(ins: str, inp: str = "") -> str:
     out: str = ""
     loop_stack: list[int] = []
     starttime = time()
-    TIMEOUT = 10
     commands = 0
     while(ins_ptr < len(ins)):
         match(ins[ins_ptr]):
-            case '<': ptr -= (1 if ptr != 0 else -BUF_SIZE)
-            case '>': ptr += (1 if ptr != BUF_SIZE else -BUF_SIZE)
-            case '+': mem[ptr] = uint8(mem[ptr] + 1)
-            case '-': mem[ptr] = uint8(mem[ptr] - 1)
+            case '<': ptr -= (1 if ptr > 0 else -BUF_SIZE)
+            case '>': ptr += (1 if ptr < BUF_SIZE else -BUF_SIZE)
+            case '+': mem[ptr] += (1 if ptr < 256 else -256)
+            case '-': mem[ptr] -= (1 if mem[ptr] > 0 else -256)
             case '[':
                 if bool(mem[ptr]): loop_stack += [ins_ptr]
                 else:
@@ -32,14 +37,9 @@ def bf(ins: str, inp: str = "") -> str:
             case '.': out += chr(mem[ptr])
         ins_ptr += 1
         commands += 1
-        if(time() > starttime + TIMEOUT):
-            print(f"ERROR: Timed out ({TIMEOUT} seconds)" + 
-                  f"at instruction index {ins_ptr}," + 
-                  f"commands executed: {commands}")
-            return None
     return out
 
-ins = ".+[.+]"
+ins = '''++++++++[->-[->-[->-[-]<]<]<]'''
 start = time()
 print(bf(ins))
-print(f'Finished in {(time() - start) * 1000} ms')
+print(f'Finished in {time() - start} seconds')
