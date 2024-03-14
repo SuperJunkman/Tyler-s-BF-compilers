@@ -1,4 +1,8 @@
-#BrainF*ck class-based interpereter w/ methods for each command; no recursive function calls
+#BrainF*ck class-based interpereter w/ methods for each command
+#By Tyler Marion
+#Runs the benchmark test below (268,435,497 commands) in 614 seconds (10 minutes)
+#++++++++[->-[->-[->-[-]<]<]<]
+
 
 from sys import exit
 from time import time
@@ -92,5 +96,5 @@ class bf_interpreter:
         print(f'finished in {end - start} seconds')
 
 
-bf_exec = bf_interpreter('''+[->-[->-[-]<]<]''')
+bf_exec = bf_interpreter('''++++++++[->-[->-[->-[-]<]<]<]''')
 bf_exec.run()
